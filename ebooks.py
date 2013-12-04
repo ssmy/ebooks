@@ -129,13 +129,15 @@ def get_file_list(path):
     list_books = []
     path = os.path.abspath(path)
     i = 1
-    for elem in os.listdir(path):
-        if '.' in elem and elem[elem.rindex('.')+1:].strip() in formats:
+    for root, dirs, files in os.walk(path):
+      if files:
+        for elem in files:
+          if '.' in elem and elem[elem.rindex('.')+1:].strip() in formats:
             file_name = elem
             name = elem[:elem.rindex('.')]
             letter = first_letter(name)
-            list_books.append( {'path': path, 'file': file_name, 'name': name,
-                                'letter': letter, 'id': i} )
+            list_books.append( {'path': os.path.join(root, elem), 'file': file_name, 'name': name,
+              'letter': letter, 'id': i} )
             i += 1
     return list_books
 
