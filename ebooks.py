@@ -13,10 +13,15 @@ __maintainer__ = "A. Daouzli"
 import os
 import sys
 import epub
+import ConfigParser
 
 ############ custom data
 
-books_path = "/path/to/your/ebooks"
+config = ConfigParser.SafeConfigParser()
+base_path = os.path.dirname(os.path.abspath(__file__))
+config.read(os.path.join(base_path, 'config.cfg'))
+
+books_path = config.get('library', 'path')
 formats = ['epub','pdf']
 ignored_chars = ['(', '[']
 lang = 'en'
